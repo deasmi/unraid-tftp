@@ -1,8 +1,8 @@
-FROM alpine:latest
+FROM archlinux:latest
 
-RUN apk --no-cache add tftp-hpa
-RUN apk --no-cache add bash
-ENTRYPOINT ["in.tftpd"]
-CMD ["-L", "--secure", "/var/tftpboot"]
-VOLUME /var/tftpboot
+RUN mkdir /data
+RUN chown nobody:nobody /data
+ENTRYPOINT ["uftpd"]
+CMD ["-n","-o","ftp=0,tftp=69,writeable","/data"]
+VOLUME /data
 EXPOSE 69/udp
